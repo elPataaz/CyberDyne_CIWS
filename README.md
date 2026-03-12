@@ -1,44 +1,58 @@
 # 🛡️ Project: CyberDyne CIWS (v2.4)
 ### *Autonomous Close-In Weapon System HUD for ESP32*
 
-Inspired by the T-800 interface, this project is a DIY **Close-In Weapon System** prototype. It uses a VL53L1X Laser ToF sensor for millimeter-accurate tracking and dual servos for high-speed target acquisition.
+This repository contains the source code and wiring for a DIY **Close-In Weapon System** prototype. It features a Terminator-inspired HUD, 65-115° high-speed radar scanning, and active target locking.
+
+---
+
+## 🔌 Master Wiring Map (ESP32)
+
+### 🖥️ ST7789 TFT Display (High Priority)
+
+| TFT Pin | ESP32 Pin | Function | Wire Color (Typical) |
+| :--- | :--- | :--- | :--- |
+| **VCC** | **3V3** | Power (3.3V) | Red |
+| **GND** | **GND** | Ground | Black |
+| **SCL** | **GPIO 18** | SPI Clock | Yellow |
+| **SDA** | **GPIO 23** | SPI MOSI (Data) | Green |
+| **RES** | **GPIO 4** | Reset | Orange |
+| **DC** | **GPIO 2** | Data/Command | Blue |
+| **CS** | **GPIO 5** | Chip Select | White |
+| **BLK** | **3V3** | Backlight Control | Red |
+
+### 🛰️ VL53L1X ToF Sensor (I2C)
+
+| Sensor Pin | ESP32 Pin | Function |
+| :--- | :--- | :--- |
+| **VIN** | **3V3** | Power |
+| **GND** | **GND** | Ground |
+| **SCL** | **GPIO 22** | I2C Clock |
+| **SDA** | **GPIO 21** | I2C Data |
+
+### 🕹️ Servos & Alerts
+
+| Component | ESP32 Pin | Function |
+| :--- | :--- | :--- |
+| **Servo A** | **GPIO 19** | Pan (Horizontal Sweep) |
+| **Servo B** | **GPIO 12** | Tilt (Vertical Wobble) |
+| **Buzzer** | **GPIO 13** | Active Audio Alerts |
+| **LED Red** | **GPIO 14** | Target Lock Indicator |
+| **LED Green** | **GPIO 27** | System Status |
 
 ---
 
 ## ⚠️ CRITICAL SETUP REQUIREMENT
-To avoid PWM timer conflicts between the **Buzzer** and **Servos** (which causes jittering or crashes):
+To avoid PWM timer conflicts between the **Buzzer** and **Servos**:
 *   **Library:** `ESP32Servo`
 *   **Required Version:** `2.0.14` 
-*   *Note: Do not use the latest version; it is known to break PWM stability on ESP32 logic.*
+*   *Note: Using newer versions may cause the servos to jitter or the ESP32 to crash during audio play.*
 
 ---
 
-## 🚀 System Features
-- **Authentic Boot Sequence:** Terminal-style text rendering with "1 Letter = 1 Beep" synchronized audio.
-- **Precision Radar:** High-speed laser scanning between **65° and 115°**.
-- **Dynamic Lock-On:** Automatically switches to "Search & Destroy" mode when a target enters the 400mm kill zone.
-- **Visual HUD:** Real-time Distance (mm) and Angle (DEG) tracking with zero-ghosting UI updates.
-- **Aggressive Tracking:** Faster Servo B vertical "wobble" once a target is locked.
-
-## 🔌 Hardware / Pin Map
-
-
-| Component | Pin | Notes |
-| :--- | :--- | :--- |
-| **TFT CS** | 5 | Standard SPI |
-| **TFT DC** | 2 | |
-| **TFT RST** | 4 | |
-| **Buzzer** | 13 | Active Buzzer Required |
-| **LED Red** | 14 | Target Lock Indicator |
-| **LED Green** | 27 | System Status Indicator |
-| **Servo A** | 19 | Pan (Horizontal) |
-| **Servo B** | 12 | Tilt (Vertical) |
-
-## 🛠️ Installation
-1. Install the **ESP32 Board Manager** in Arduino IDE.
-2. Install **Adafruit ST7789** and **VL53L1X** libraries.
-3. **Downgrade** `ESP32Servo` to **v2.0.14** via the Library Manager.
-4. Upload `CyberDyne_CIWS.ino`.
+## 🛠️ Build Notes
+*   **Wiper Logic:** The radar sweeps between **65° and 115°**.
+*   **Terminator HUD:** Features "1 Letter = 1 Beep" boot sequence.
+*   **Power:** If the screen flickers, power the Servos from an external 5V source (Common GND).
 
 ---
-*Created for the maker community. Built for satisfaction, frustration, and a few sleepless nights.*
+*Built for the maker community. Feel free to remix, upgrade, and share your versions!*
