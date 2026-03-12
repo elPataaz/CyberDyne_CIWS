@@ -38,8 +38,17 @@ This repository contains the source code and wiring for a DIY **Close-In Weapon 
 | **Buzzer** | **GPIO 13** | Active Audio Alerts |
 | **LED Red** | **GPIO 14** | Target Lock Indicator |
 | **LED Green** | **GPIO 27** | System Status |
+----
+### 💡 LED Hardware Protection (220Ω Resistors)
+The ESP32 GPIO pins output 3.3V, but they are sensitive to high current. You **must** use a current-limiting resistor for each LED to prevent hardware damage.
 
----
+- **Recommended Value**: **220Ω** (Red-Red-Brown stripes). 
+- **The Setup**: 
+  - **Red LED (Lock)**: ESP Pin 14 ➡️ 220Ω Resistor ➡️ LED Anode (+) ➡️ GND.
+  - **Green LED (Status)**: ESP Pin 27 ➡️ 220Ω Resistor ➡️ LED Anode (+) ➡️ GND.
+- **Why?**: A 220Ω resistor strikes the perfect brightness balance
+
+----
 ## ⚠️ CRITICAL: Common Ground Requirement
 If you are using an external battery pack or power supply for your servos (highly recommended), you **MUST** connect the Ground (GND) of that power supply to a **GND pin on the ESP32**.
 
@@ -65,6 +74,13 @@ This project is precisely tuned to specific core versions. Updating may break th
 1. In Arduino IDE, go to **Tools** > **Board** > **Boards Manager**.
 2. Search for **esp32** by Espressif Systems.
 3. If it says a higher version is installed, click the dropdown and select **2.0.14**, then click **Install**.
+
+4. ## 💡 Pro Tip: Flash and Forget
+Once you have successfully flashed the **CyberDyne CIWS** code onto your ESP32, the board is "Production Ready." 
+
+- **Independent Operation**: The ESP32 does not need the Arduino IDE or your computer to run. It will boot the HUD and start the 65-125° sweep as soon as it gets 5V power.
+- **IDE Updates**: After your CIWS is "Live," you can safely update your Arduino IDE and ESP32 Board Manager (v3.0+) for **other** projects. Just remember that if you ever need to edit or re-flash THIS project, you must downgrade your Board Manager back to **v2.0.14** first.
+
 
 
 ---
