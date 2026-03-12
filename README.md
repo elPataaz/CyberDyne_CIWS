@@ -34,12 +34,18 @@ This repository contains the source code and wiring for a DIY **Close-In Weapon 
 | Component | ESP32 Pin | Function |
 | :--- | :--- | :--- |
 | **Servo A** | **GPIO 19** | Pan (Horizontal Sweep) |
-| **Servo B** | **GPIO 12** | Tilt (Vertical Wobble) |
+| **Servo B** | **GPIO 12** | Tilt (Vertical Inclination sweep) |
 | **Buzzer** | **GPIO 13** | Active Audio Alerts |
 | **LED Red** | **GPIO 14** | Target Lock Indicator |
 | **LED Green** | **GPIO 27** | System Status |
 
 ---
+## ⚠️ CRITICAL: Common Ground Requirement
+If you are using an external battery pack or power supply for your servos (highly recommended), you **MUST** connect the Ground (GND) of that power supply to a **GND pin on the ESP32**.
+
+*   **Why?** Without a shared ground, the "Signal" wire from the ESP32 has no reference point. This causes the servos to jitter uncontrollably and can lead to I2C communication errors with the Laser sensor.
+*   **The Rule:** All black (GND) wires from the Display, Sensor, Servos, and ESP32 must eventually meet on the same "Minus" rail of your breadboard.
+
 
 ## ⚠️ CRITICAL SETUP REQUIREMENT
 To avoid PWM timer conflicts between the **Buzzer** and **Servos**:
@@ -74,6 +80,14 @@ This project is precisely tuned to specific core versions. Updating may break th
 Servos create significant "electrical noise" and sudden current spikes when they move. 
 *   **The Fix:** Add a **470µF to 1000µF electrolytic capacitor** across the 5V and GND rails near the servos. This acts as a "mini-battery" to prevent the ESP32 from rebooting during fast sweeps.
 *   **Separate Rails:** Always keep the **TFT and ToF sensor on the 3.3V rail** and the **Servos on the 5V rail** to prevent high-voltage damage.
+
+*   
+*   ## ⚠️ CRITICAL: Common Ground Requirement
+If you are using an external battery pack or power supply for your servos (highly recommended), you **MUST** connect the Ground (GND) of that power supply to a **GND pin on the ESP32**.
+
+*   **Why?** Without a shared ground, the "Signal" wire from the ESP32 has no reference point. This causes the servos to jitter uncontrollably and can lead to I2C communication errors with the Laser sensor.
+*   **The Rule:** All black (GND) wires from the Display, Sensor, Servos, and ESP32 must eventually meet on the same "Minus" rail of your breadboard.
+
 
 ### 2. I2C Reliability (VL53L1X)
 The ToF sensor communicates via I2C. If your wires are longer than 10cm, you might experience "hangs".
