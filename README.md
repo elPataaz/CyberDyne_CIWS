@@ -47,6 +47,20 @@ To avoid PWM timer conflicts between the **Buzzer** and **Servos**:
 *   **Required Version:** `2.0.14` 
 *   *Note: Using newer versions may cause the servos to jitter or the ESP32 to crash during audio play.*
 
+*   ## 🔒 Stability Lockdown (Do Not Update)
+This project is precisely tuned to specific core versions. Updating may break the PWM timers for the Buzzer and Servos.
+
+- **Arduino IDE**: 2.3.2 (Recommended stable version)
+- **ESP32 Board Manager**: **Version 2.0.14** (IMPORTANT)
+  - *If you use 3.0.x or higher, the `ledc` functions and `ESP32Servo` library will conflict.*
+- **Library Pins**: Do not change the Pin assignments unless you understand ESP32 Hardware Timer allocation.
+
+### How to lock your version:
+1. In Arduino IDE, go to **Tools** > **Board** > **Boards Manager**.
+2. Search for **esp32** by Espressif Systems.
+3. If it says a higher version is installed, click the dropdown and select **2.0.14**, then click **Install**.
+
+
 ---
 
 ## 🛠️ Build Notes
