@@ -109,6 +109,32 @@ If you are using an external battery pack or power supply for your servos (highl
 The ToF sensor communicates via I2C. If your wires are longer than 10cm, you might experience "hangs".
 *   **Pull-up Resistors:** Most VL53L1X modules have built-in 10k resistors. If yours does not, add **4.7kΩ pull-up resistors** from SDA and SCL to 3.3V to stabilize the signal.
 
+*   💻 Code Snippet: Manual Range Extension
+To extend the engagement range beyond the default 400mm, update your void setup() and detection logic as follows:
+
+   ```cpp
+// 1. In Setup: Initialize Long Range Mode
+void setup() {
+  // ... existing init code ...
+  sensor.setDistanceMode(VL53L1X::Long); 
+  sensor.setMeasurementTimingBudget(50000); // 50ms budget for stable long-range
+  sensor.startContinuous(50); 
+}
+
+// 2. In Loop: Update Threshold
+void loop() {
+  int distance = sensor.read();
+  
+  // Adjusted from 400mm to 2000mm (2 meters)
+  if (distance > 0 && distance < 2000) { 
+    triggerTargetLock(); // Your existing lock function
+  }
+}
+
+---------------
+[!TIP]Why 400mm is the "Sweet Spot": In Short mode, the sensor is less affected by ambient light (sunlight/bright indoor bulbs). If you extend to Long mode for outdoor use, you will see "phantom targets" if the sun is hitting the lens directly.
+
+
 ### 3. Display Performance
 *   **SPI Speed:** For the cleanest HUD updates, use the **Hardware SPI pins** (18 and 23) rather than defining random pins in software.
 *   **Backlight:** If the screen is too dim, you can connect the **BLK** pin to a PWM-capable pin (like GPIO 32) to control brightness in code, or just tie it to 3.3V for max brightness.
