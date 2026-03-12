@@ -11,6 +11,14 @@ Library: ESP32Servo
 Required Version: 2.0.14
 Note: Do not use the latest version; it is known to break PWM stability on ESP32 logic.
 -------------------------------------------------------------------------------------
+🛡️ Project: CyberDyne CIWS (v2.4)
+Autonomous Close-In Weapon System HUD for ESP32
+Inspired by the T-800 interface, this project is a DIY Close-In Weapon System prototype. It uses a VL53L1X Laser ToF sensor for millimeter-accurate tracking and dual servos for high-speed target acquisition.
+⚠️ CRITICAL SETUP REQUIREMENT
+To avoid PWM timer conflicts between the Buzzer and Servos (which causes jittering or crashes):
+Library: ESP32Servo
+Required Version: 2.0.14
+Note: Do not use the latest version; it is known to break PWM stability on ESP32 logic.
 🚀 System Features
 Authentic Boot Sequence: Terminal-style text rendering with "1 Letter = 1 Beep" synchronized audio.
 Precision Radar: High-speed laser scanning between 65° and 115°.
@@ -31,9 +39,5 @@ Servo B	12	Tilt (Vertical)
 Install the ESP32 Board Manager in Arduino IDE.
 Install Adafruit ST7789 and VL53L1X libraries.
 Downgrade ESP32Servo to v2.0.14 via the Library Manager.
-Open CyberDyne_CIWS.ino and upload.
-📸 Prototypes
-(Upload your "spaghetti" wiring photo here to show the raw build process!)
-![Wiring Prototype](wiring_prototype.jpg)
-Created for the maker community. Built for satisfaction, frustration, and a few sleepless nights. Feel free to remix and add your own weapon modules!
+
 
