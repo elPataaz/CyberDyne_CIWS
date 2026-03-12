@@ -3,7 +3,17 @@
 
 This repository contains the source code and wiring for a DIY **Close-In Weapon System** prototype. It features a Terminator-inspired HUD, 65-115° high-speed radar scanning, and active target locking.
 
----
+## 🛠️ Hardware Specifications
+* **Controller:** ESP32 Dev Module (30-Pin Version)
+* **Display:** 1.3" or 1.54" ST7789 TFT (240x240)
+* **Sensor:** VL53L1X Time-of-Flight (ToF) Laser Ranging
+* **Actuators:** 2x SG90 or MG90S Micro Servos
+
+---![CIWS_3](https://github.com/user-attachments/assets/6eb990d1-14cb-40d2-abed-30bea7155f3c)
+![CWIS_1](https://github.com/user-attachments/assets/f188e737-8c70-48b0-88e8-4da0b6619894)
+![CWIS_2](https://github.com/user-attachments/assets/5489714f-81d2-4e74-85c9-aa5935dceb84)
+![20260312_154121](https://github.com/user-attachments/assets/0f136a8e-cc22-4e95-af76-b302db7fc6cb)
+
 
 ## 🔌 Master Wiring Map (ESP32)
 
@@ -112,24 +122,26 @@ The ToF sensor communicates via I2C. If your wires are longer than 10cm, you mig
 *   💻 Code Snippet: Manual Range Extension
 To extend the engagement range beyond the default 400mm, update your void setup() and detection logic as follows:
 
-   ```cpp
-// 1. In Setup: Initialize Long Range Mode
+### 🛠️ Long Range Mode Implementation
+To extend the engagement range to 2 meters, update your `setup` and `loop` functions as follows:
+
+```cpp
 void setup() {
-  // ... existing init code ...
+  // Initialize Long Range Mode
   sensor.setDistanceMode(VL53L1X::Long); 
   sensor.setMeasurementTimingBudget(50000); // 50ms budget for stable long-range
   sensor.startContinuous(50); 
 }
 
-// 2. In Loop: Update Threshold
 void loop() {
   int distance = sensor.read();
-  
-  // Adjusted from 400mm to 2000mm (2 meters)
+
+  // Adjusted threshold for 2000mm (2 meters)
   if (distance > 0 && distance < 2000) { 
-    triggerTargetLock(); // Your existing lock function
+    triggerTargetLock(); 
   }
 }
+```
 
 ---------------
 [!TIP]Why 400mm is the "Sweet Spot": In Short mode, the sensor is less affected by ambient light (sunlight/bright indoor bulbs). If you extend to Long mode for outdoor use, you will see "phantom targets" if the sun is hitting the lens directly.
