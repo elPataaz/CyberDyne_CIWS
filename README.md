@@ -13,6 +13,7 @@ This repository contains the source code and wiring for a DIY **Close-In Weapon 
 ![CWIS_1](https://github.com/user-attachments/assets/f188e737-8c70-48b0-88e8-4da0b6619894)
 ![CWIS_2](https://github.com/user-attachments/assets/5489714f-81d2-4e74-85c9-aa5935dceb84)
 ![20260312_154121](https://github.com/user-attachments/assets/0f136a8e-cc22-4e95-af76-b302db7fc6cb)
+https://www.youtube.com/channel/UCSntWEfd_NLoU-g7KdRJKsg
 
 
 ## 🔌 Master Wiring Map (ESP32)
